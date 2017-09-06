@@ -1,15 +1,13 @@
 package com.wsn.controller;
 
 import com.wsn.entity.CustomResponse;
-import com.wsn.service.CheckActiveMQService;
-import com.wsn.service.CheckDataBaseService;
-import com.wsn.service.CheckFireVgwService;
-import com.wsn.service.CheckWebServerService;
+import com.wsn.service.*;
 import com.wsn.untils.SendSimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,21 +30,15 @@ public class CheckAllServiceController {
     @Autowired
     private SendSimpleEmail sendSimpleEmail;
     @Autowired
-    private CheckWebServerService checkWebServerService;
-    @Autowired
-    private CheckDataBaseService checkDataBaseService;
-    @Autowired
-    private CheckActiveMQService checkActiveMQService;
-    @Autowired
-    private CheckFireVgwService checkFireVgwService;
+    private CheckAllService checkAllService;
     @Autowired
     private Environment environment;
 
     @RequestMapping("/checkallservice")
     public String checkAllService(ModelMap model) {
-        List<CustomResponse> list = new ArrayList<>();
+        List<CustomResponse> list;
         try {
-            checkService(list);
+            list = checkAllService.checkService();
             model.addAttribute("list", list);
             model.addAttribute("platformName", environment.getProperty("platform.name"));
         } catch (Exception e) {
@@ -61,15 +53,4 @@ public class CheckAllServiceController {
     }
 
 
-    /**
-     * 检查服务器
-     * @param list
-     * @throws Exception
-     */
-    private void checkService(List<CustomResponse> list) throws Exception {
-        list.add(checkActiveMQService.judgeIsHealth());
-        list.add(checkWebServerService.requestFireinfoUrl());
-        list.add(checkDataBaseService.checkDataBase());
-        list.add(checkFireVgwService.judgeVgw());
-    }
 }

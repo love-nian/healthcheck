@@ -4,15 +4,15 @@ spring:
     name: fireinfo_healthcheck
 
   datasource:
-    url: jdbc:mysql://43.241.214.218:6033/firedb
-    username: firefighting
-    password: firefighting
+    url: jdbc:mysql://0.0.0.0:0000/db
+    username: ****
+    password: ****
     driver-class-name: com.mysql.jdbc.Driver
 
   activemq:
-    broker-url: tcp://101.236.44.31:61616
-    user: admin
-    password: )OKM(ijn
+    broker-url: tcp://******
+    user: ******
+    password: ******
     in-memory: true
 
   jms:
@@ -20,8 +20,8 @@ spring:
 
   mail:
     host: smtp.163.com
-    username: m15821998331@163.com
-    password: usa911
+    username: ******
+    password: ******
     properties:
       mail:
         smtp:
@@ -57,7 +57,7 @@ mq:
 
 #接收邮箱
 mail:
-  username: 745729377@qq.com
+  username: ******
 
 #应用端口
 server:
